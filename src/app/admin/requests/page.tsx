@@ -19,10 +19,22 @@ type RequestsResponse = {
   retail: RequestRecord[];
 };
 
+type RequestKind = keyof RequestsResponse;
+
+const TAB_LABELS: Record<RequestKind, string> = {
+  manufacturing: 'Manufacturing Requests',
+  diamond: 'Diamond Requests',
+  gemstone: 'Gemstone Requests',
+  cutting: 'Cutting Requests',
+  design: 'Design Library Requests',
+  retail: 'Retail Support Requests',
+};
+
 export default function AdminRequestsPage() {
   const [data, setData] = useState<RequestsResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+   const [activeTab, setActiveTab] = useState<RequestKind>('manufacturing');
 
   useEffect(() => {
     (async () => {
@@ -135,47 +147,50 @@ export default function AdminRequestsPage() {
         <h1 className="section-title">Requests Overview</h1>
         <div className="gold-divider" />
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 40 }}>
-          <div>
-            <h2 className="section-title" style={{ fontSize: 20 }}>
-              Manufacturing Requests
-            </h2>
-            {renderTable(data.manufacturing)}
+        <div style={{ marginTop: 24 }}>
+          <div
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: 8,
+              marginBottom: 24,
+            }}
+          >
+            {(Object.keys(TAB_LABELS) as RequestKind[]).map((kind) => {
+              const isActive = activeTab === kind;
+              return (
+                <button
+                  key={kind}
+                  type="button"
+                  onClick={() => setActiveTab(kind)}
+                  style={{
+                    padding: '8px 14px',
+                    borderRadius: 999,
+                    border: isActive
+                      ? '1px solid var(--gold)'
+                      : '1px solid var(--border)',
+                    background: isActive ? 'var(--champagne)' : 'white',
+                    color: 'var(--text)',
+                    fontSize: 12,
+                    letterSpacing: '0.08em',
+                    textTransform: 'uppercase',
+                    cursor: 'pointer',
+                  }}
+                >
+                  {TAB_LABELS[kind]}
+                </button>
+              );
+            })}
           </div>
 
           <div>
-            <h2 className="section-title" style={{ fontSize: 20 }}>
-              Diamond Requests
+            <h2
+              className="section-title"
+              style={{ fontSize: 20, marginBottom: 12 }}
+            >
+              {TAB_LABELS[activeTab]}
             </h2>
-            {renderTable(data.diamond)}
-          </div>
-
-          <div>
-            <h2 className="section-title" style={{ fontSize: 20 }}>
-              Gemstone Requests
-            </h2>
-            {renderTable(data.gemstone)}
-          </div>
-
-          <div>
-            <h2 className="section-title" style={{ fontSize: 20 }}>
-              Cutting Requests
-            </h2>
-            {renderTable(data.cutting)}
-          </div>
-
-          <div>
-            <h2 className="section-title" style={{ fontSize: 20 }}>
-              Design Library Requests
-            </h2>
-            {renderTable(data.design)}
-          </div>
-
-          <div>
-            <h2 className="section-title" style={{ fontSize: 20 }}>
-              Retail Support Requests
-            </h2>
-            {renderTable(data.retail)}
+            {renderTable(data[activeTab])}
           </div>
         </div>
       </div>

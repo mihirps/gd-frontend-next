@@ -52,7 +52,7 @@ export default function RootLayout({ children }) {
           </div>
           <ul className="nav-links">
             <li>
-              <Link href="/manufacturing">Jewelry</Link>
+              <Link href="/jewelry">Jewelry</Link>
             </li>
             <li>
               <Link href="/diamonds">Diamonds</Link>
@@ -130,7 +130,7 @@ export default function RootLayout({ children }) {
                 <h4>Services</h4>
                 <ul className="footer-links">
                   <li>
-                    <Link href="/manufacturing">Manufacturing</Link>
+                    <Link href="/jewelry">Manufacturing</Link>
                   </li>
                   <li>
                     <Link href="/diamonds">Diamonds</Link>
