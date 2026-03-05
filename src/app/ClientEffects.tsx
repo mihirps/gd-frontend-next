@@ -1,8 +1,11 @@
 'use client';
 
 import { useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 
 export default function ClientEffects() {
+  const pathname = usePathname();
+
   useEffect(() => {
     // Scroll nav shadow
     const onScroll = () => {
@@ -12,7 +15,7 @@ export default function ClientEffects() {
     window.addEventListener('scroll', onScroll);
     onScroll();
 
-    // Fade-in observer
+    // Fade-in observer (re-run on route change so new sections are tracked)
     const items = document.querySelectorAll<HTMLElement>('.fade-in');
     const observer = new IntersectionObserver(
       entries => {
@@ -211,7 +214,7 @@ export default function ClientEffects() {
       shapesCleanup();
       if (sliderInterval) window.clearInterval(sliderInterval);
     };
-  }, []);
+  }, [pathname]);
 
   return null;
 }
