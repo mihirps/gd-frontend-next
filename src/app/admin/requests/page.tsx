@@ -2,9 +2,6 @@
 
 import { useEffect, useState } from 'react';
 
-const API_BASE =
-  process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:4000';
-
 type RequestRecord = {
   submittedAt?: string;
   [key: string]: any;
@@ -34,12 +31,14 @@ export default function AdminRequestsPage() {
   const [data, setData] = useState<RequestsResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-   const [activeTab, setActiveTab] = useState<RequestKind>('manufacturing');
+  const [activeTab, setActiveTab] = useState<RequestKind>('manufacturing');
 
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/requests`);
+        // Fetch through same-origin proxy so the backend admin token
+        // never ships to the browser.
+        const res = await fetch('/api/admin/requests');
         if (!res.ok) {
           throw new Error('Failed to load requests');
         }
