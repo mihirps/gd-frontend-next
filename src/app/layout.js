@@ -169,9 +169,9 @@ export default function RootLayout({ children }) {
               <div className="footer-col footer-contact">
                 <h4>Contact</h4>
                 <p>
-                  sales@gemstonediamond.com
+                  sales@gemstone.com
                   <br />
-                  +1 (000) 000-0000
+                  +1 (626) 367-3527
                   <br />
                   <br />
                   Available for U.S. Independent Retailers

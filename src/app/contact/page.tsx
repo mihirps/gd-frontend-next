@@ -44,15 +44,15 @@ export default function ContactPage() {
                 discussions.
               </p>
               <div className="contact-info">
-                <a href="mailto:sales@gemstonediamond.com">
-                  sales@gemstonediamond.com
+                <a href="mailto:sales@gemstone.com">
+                  sales@gemstone.com
                 </a>
-                <a href="tel:+10000000000">+1 (000) 000-0000</a>
+                <a href="tel:+10000000000">+1 (626) 367-3527</a>
                 <span
                   className="hours-note"
                   style={{ fontSize: 12, color: 'var(--text-light)' }}
                 >
-                  Mon–Fri · 9am–6pm EST
+                  Mon–Sat · 9am–6pm EST
                 </span>
               </div>
               <br />
@@ -101,7 +101,7 @@ export default function ContactPage() {
                 Questions about our services, capabilities, or how we work.
               </p>
               <div className="contact-info">
-                <a href="mailto:info@gemstonediamond.com">
+                <a href="mailto:info@gemstone.com">
                   info@gemstonediamond.com
                 </a>
                 <span className="hours-note">We respond within 24 hours</span>
@@ -113,22 +113,23 @@ export default function ContactPage() {
               >
                 <a
                   className="social-icon"
-                  href="https://www.instagram.com"
+                  href="https://www.instagram.com/gemstone_diamonds/"
                   aria-label="Instagram"
                 >
                   <i className="fa-brands fa-instagram" />
                 </a>
                 <a
                   className="social-icon"
-                  href="https://www.facebook.com"
+                  href="https://www.facebook.com/gemstonediamonds/"
                   aria-label="Facebook"
                 >
                   <i className="fa-brands fa-facebook-f" />
                 </a>
                 <a
                   className="social-icon"
-                  href="https://www.whatsapp.com"
+                  href="https://wa.me/16263673527"
                   aria-label="WhatsApp"
+                  target="_blank"
                 >
                   <i className="fa-brands fa-whatsapp" />
                 </a>
