@@ -4,7 +4,9 @@ export async function GET() {
   const backendUrl =
     process.env.BACKEND_URL ||
     process.env.NEXT_PUBLIC_BACKEND_URL ||
-    'http://localhost:4000';
+    (process.env.NODE_ENV === 'production'
+      ? 'https://api.gemstonediamond.com'
+      : 'http://localhost:4000');
 
   const adminToken = process.env.BACKEND_ADMIN_TOKEN || '';
   if (!adminToken) {

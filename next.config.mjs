@@ -4,7 +4,9 @@ const nextConfig = {
     const backend =
       process.env.BACKEND_URL ||
       process.env.NEXT_PUBLIC_BACKEND_URL ||
-      'http://localhost:4000';
+      (process.env.NODE_ENV === 'production'
+        ? 'https://api.gemstonediamond.com'
+        : 'http://localhost:4000');
 
     return [
       // Proxy uploads so backend can return `/uploads/...` URLs
@@ -31,20 +33,7 @@ const nextConfig = {
         source: '/api/custom-jewelry',
         destination: `${backend}/api/custom-jewelry`,
       },
-      {
-        source: '/api/request/:path*',
-        destination: `${backend}/api/request/:path*`,
-      },
-
-      // Optional health endpoints
-      {
-        source: '/health',
-        destination: `${backend}/health`,
-      },
-      {
-        source: '/ready',
-        destination: `${backend}/ready`,
-      },
+      
     ];
   },
 };

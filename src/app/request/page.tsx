@@ -3,6 +3,12 @@
 const BOOK_CALENDAR_URL =
   'https://calendar.google.com/calendar/appointments/schedules/AcZssZ2Aaafw8kAHZlAUoqXan9cm5O4YgtoOyJyKPN8060M0qrgqc1UDlcKq7OjEV903XRL40p6pp6xe?gv=true';
 
+const API_BASE =
+  process.env.NEXT_PUBLIC_BACKEND_URL ||
+  (process.env.NODE_ENV === 'production'
+    ? 'https://api.gemstonediamond.com'
+    : 'http://localhost:4000');
+
 function handleSubmit(endpoint: string) {
   return async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -10,8 +16,7 @@ function handleSubmit(endpoint: string) {
     const formData = new FormData(form);
 
     try {
-      // Use same-origin API paths; Next.js rewrites proxy to backend in production.
-      const res = await fetch(endpoint, {
+      const res = await fetch(`${API_BASE}${endpoint}`, {
         method: 'POST',
         body: formData,
       });
@@ -828,4 +833,3 @@ export default function RequestPage() {
     </>
   );
 }
-
