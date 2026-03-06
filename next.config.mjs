@@ -1,11 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   async rewrites() {
+    const isProd = process.env.NODE_ENV === 'production';
     const backend =
       process.env.BACKEND_URL ||
-      process.env.NEXT_PUBLIC_BACKEND_URL ||
-      (process.env.NODE_ENV === 'production'
-        ? 'https://api.gemstonediamond.com'
+      (isProd
+        ? process.env.NEXT_PUBLIC_BACKEND_URL || 'https://api.gemstonediamond.com'
         : 'http://localhost:4000');
 
     return [

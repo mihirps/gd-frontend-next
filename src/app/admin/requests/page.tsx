@@ -28,51 +28,41 @@ const TAB_LABELS: Record<RequestKind, string> = {
 };
 
 export default function AdminRequestsPage() {
-  const [data, setData] = useState<RequestsResponse | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<RequestKind>('manufacturing');
+  const [dataMap, setDataMap] = useState<Partial<RequestsResponse>>({});
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    (async () => {
+    let cancelled = false;
+    const load = async () => {
+      setLoading(true);
+      setError(null);
       try {
-        // Fetch through same-origin proxy so the backend admin token
-        // never ships to the browser.
-        const res = await fetch('/api/admin/requests');
+        const res = await fetch(`/api/admin/request/${activeTab}`);
         if (!res.ok) {
           throw new Error('Failed to load requests');
         }
         const json = await res.json();
-        setData(json);
+        const items: RequestRecord[] = Array.isArray(json?.items) ? json.items : [];
+        if (!cancelled) {
+          setDataMap(prev => ({ ...prev, [activeTab]: items }));
+        }
       } catch (err: any) {
-        console.error(err);
-        setError(err?.message || 'Failed to load requests');
+        if (!cancelled) {
+          setError(err?.message || 'Failed to load requests');
+        }
       } finally {
-        setLoading(false);
+        if (!cancelled) setLoading(false);
       }
-    })();
-  }, []);
+    };
+    load();
+    return () => {
+      cancelled = true;
+    };
+  }, [activeTab]);
 
-  if (loading) {
-    return (
-      <section>
-        <div className="container">
-          <p>Loading requests…</p>
-        </div>
-      </section>
-    );
-  }
-
-  if (error || !data) {
-    return (
-      <section>
-        <div className="container">
-          <h2 className="section-title">Admin — Requests</h2>
-          <p style={{ color: 'red', fontSize: 14 }}>{error}</p>
-        </div>
-      </section>
-    );
-  }
+  // Keep page visible while switching tabs; show inline status messages
 
   const renderTable = (items: RequestRecord[]) => {
     if (!items.length) {
@@ -157,6 +147,7 @@ export default function AdminRequestsPage() {
           >
             {(Object.keys(TAB_LABELS) as RequestKind[]).map((kind) => {
               const isActive = activeTab === kind;
+              const count = (dataMap[kind] || []).length;
               return (
                 <button
                   key={kind}
@@ -174,9 +165,27 @@ export default function AdminRequestsPage() {
                     letterSpacing: '0.08em',
                     textTransform: 'uppercase',
                     cursor: 'pointer',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 8,
                   }}
                 >
                   {TAB_LABELS[kind]}
+                  <span
+                    style={{
+                      display: 'inline-block',
+                      minWidth: 22,
+                      padding: '2px 6px',
+                      borderRadius: 999,
+                      border: '1px solid var(--border)',
+                      background: isActive ? 'white' : 'var(--ivory)',
+                      color: 'var(--text-light)',
+                      fontSize: 11,
+                      textAlign: 'center',
+                    }}
+                  >
+                    {count}
+                  </span>
                 </button>
               );
             })}
@@ -189,11 +198,18 @@ export default function AdminRequestsPage() {
             >
               {TAB_LABELS[activeTab]}
             </h2>
-            {renderTable(data[activeTab])}
+            {error ? (
+              <p style={{ color: 'red', fontSize: 13, marginBottom: 12 }}>
+                {error}
+              </p>
+            ) : null}
+            {loading ? (
+              <p style={{ fontSize: 13, marginBottom: 12 }}>Loading…</p>
+            ) : null}
+            {renderTable(dataMap[activeTab] || [])}
           </div>
         </div>
       </div>
     </section>
   );
 }
-
