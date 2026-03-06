@@ -33,6 +33,30 @@ const nextConfig = {
         source: '/api/custom-jewelry',
         destination: `${backend}/api/custom-jewelry`,
       },
+      {
+        source: '/api/request/manufacturing',
+        destination: `${backend}/api/request/manufacturing`,
+      },
+      {
+        source: '/api/request/diamond',
+        destination: `${backend}/api/request/diamond`,
+      },
+      {
+        source: '/api/request/gemstone',
+        destination: `${backend}/api/request/gemstone`,
+      },
+      {
+        source: '/api/request/cutting',
+        destination: `${backend}/api/request/cutting`,
+      },
+      {
+        source: '/api/request/design',
+        destination: `${backend}/api/request/design`,
+      },
+      {
+        source: '/api/request/retail',
+        destination: `${backend}/api/request/retail`,
+      },
       
     ];
   },
