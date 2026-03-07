@@ -57,6 +57,25 @@ export default function ClientEffects() {
     };
     document.addEventListener('mousemove', onMove);
 
+    // Handle Next.js ChunkLoadError (caused by deployment mismatch)
+    // When you redeploy, old hashed chunks are deleted. If a user is on an old session,
+    // they might hit a 404 when navigating. We catch this and force a hard refresh.
+    const handleChunkError = (e: ErrorEvent) => {
+      const msg = e.message || '';
+      if (
+        msg.includes('ChunkLoadError') || 
+        msg.includes('Loading chunk') || 
+        msg.includes('Failed to load resource')
+      ) {
+        // Only reload if it looks like a Next.js chunk error
+        if (msg.includes('_next/static/chunks/')) {
+          console.warn('ChunkLoadError detected. Reloading page to sync with latest build...');
+          window.location.reload();
+        }
+      }
+    };
+    window.addEventListener('error', handleChunkError, true);
+
     // Shapes auto-scroll carousel
     const shapesTrack = document.getElementById('shapesTrack');
     let shapesCleanup = () => {};

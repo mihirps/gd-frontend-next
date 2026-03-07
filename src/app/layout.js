@@ -1,10 +1,17 @@
-// app/layout.tsx
 import Link from 'next/link';
 import Image from 'next/image';
 import Script from 'next/script';
 import './globals.css';
 import ClientEffects from './ClientEffects';
 import HamburgerToggle from './HamburgerToggle';
+
+export const metadata = {
+  title: 'Gemstone Diamond — Complete Retail Partner for Independent Jewelers',
+  description: 'Family-owned backend partner for independent U.S. jewelers: jewelry manufacturing, diamond and gemstone supply, and retail growth support.',
+  icons: {
+    icon: '/fav-icon.png',
+  },
+};
 
 const BOOK_CALENDAR_URL =
   'https://calendar.google.com/calendar/appointments/schedules/AcZssZ2Aaafw8kAHZlAUoqXan9cm5O4YgtoOyJyKPN8060M0qrgqc1UDlcKq7OjEV903XRL40p6pp6xe?gv=true';
@@ -13,14 +20,6 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <title>
-          Gemstone Diamond — Complete Retail Partner for Independent Jewelers
-        </title>
-        <meta
-          name="description"
-          content="Family-owned backend partner for independent U.S. jewelers: jewelry manufacturing, diamond and gemstone supply, and retail growth support."
-        />
-        <link rel="icon" href="/fav-icon.png" type="image/png" />
         <link
           href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
           rel="stylesheet"
