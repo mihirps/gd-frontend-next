@@ -1,6 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
+  // In production, load CSS/JS from www so they work on bare domain (gemstonediamond.com) too
+  ...(process.env.NODE_ENV === 'production' && {
+    assetPrefix: 'https://www.gemstonediamond.com',
+  }),
   trailingSlash: true,
   redirects() {
     const bareHostRedirect = {
