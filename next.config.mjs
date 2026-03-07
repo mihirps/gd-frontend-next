@@ -3,6 +3,22 @@ const nextConfig = {
   output: 'standalone',
   assetPrefix: '/',
   trailingSlash: true,
+  async redirects() {
+    return [
+      {
+        source: "/:path*",
+        has: [
+          {
+            type: "host",
+            value: "gemstonediamond.com",
+          },
+        ],
+        destination: "https://www.gemstonediamond.com/:path*",
+        permanent: true,
+      },
+    ];
+  },
+
   async rewrites() {
     const isProd = process.env.NODE_ENV === 'production';
     const backend =
