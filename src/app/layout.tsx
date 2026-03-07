@@ -53,14 +53,14 @@ export default function RootLayout({
                 gap: 10,
               }}
             >
-              <Image
+              <img
                 src="/images/logo.webp"
                 alt="Gemstone Diamond"
-                width={40}
-                height={40}
-                style={{ objectFit: 'contain' }}
-                priority
-                
+                style={{
+                  width: '40px',
+                  height: '40px',
+                  objectFit: 'contain',
+                }}
               />
               <span>Gemstone Diamond</span>
             </Link>
