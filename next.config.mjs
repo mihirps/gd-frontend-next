@@ -1,20 +1,22 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
-  assetPrefix: '/',
   trailingSlash: true,
-  async redirects() {
+  redirects() {
+    const bareHostRedirect = {
+      has: [{ type: "host", value: "gemstonediamond.com" }],
+      permanent: true,
+    };
     return [
       {
+        source: "/",
+        ...bareHostRedirect,
+        destination: "https://www.gemstonediamond.com/",
+      },
+      {
         source: "/:path*",
-        has: [
-          {
-            type: "host",
-            value: "gemstonediamond.com",
-          },
-        ],
+        ...bareHostRedirect,
         destination: "https://www.gemstonediamond.com/:path*",
-        permanent: true,
       },
     ];
   },
