@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
+  assetPrefix: '/',
+  trailingSlash: true,
   async rewrites() {
     const isProd = process.env.NODE_ENV === 'production';
     const backend =
