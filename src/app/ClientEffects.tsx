@@ -7,6 +7,23 @@ export default function ClientEffects() {
   const pathname = usePathname();
 
   useEffect(() => {
+    // Close mobile nav menu on page change (so it doesn't stay open after navigation)
+    const navLinks = document.querySelector('.nav-links');
+    if (navLinks && navLinks instanceof HTMLElement) {
+      navLinks.style.display = '';
+      navLinks.style.flexDirection = '';
+      navLinks.style.position = '';
+      navLinks.style.top = '';
+      navLinks.style.left = '';
+      navLinks.style.right = '';
+      navLinks.style.background = '';
+      navLinks.style.padding = '';
+      navLinks.style.gap = '';
+      navLinks.style.borderBottom = '';
+      navLinks.style.zIndex = '';
+      (navLinks.style as any).backdropFilter = '';
+    }
+
     // Scroll nav shadow
     const onScroll = () => {
       const nav = document.getElementById('mainNav');
