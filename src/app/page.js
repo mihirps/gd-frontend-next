@@ -1,4 +1,4 @@
-'use client';
+import Link from 'next/link';
 
 export default function HomePage() {
   return (
@@ -153,11 +153,9 @@ export default function HomePage() {
             />
           </div>
           <div className="pillars-grid fade-in fade-in-delay-1">
-            <div
+            <Link
+              href="/manufacturing"
               className="pillar-card"
-              onClick={() => {
-                window.location.href = '/manufacturing';
-              }}
             >
               <div
                 className="img-box pillar-img no-shimmer"
@@ -175,22 +173,14 @@ export default function HomePage() {
                 <p className="pillar-steps">
                   Design → CAD → Wax → Casting → Setting → Finishing → Shipping
                 </p>
-                <a
-                  className="pillar-link"
-                  onClick={e => {
-                    e.preventDefault();
-                    window.location.href = '/manufacturing';
-                  }}
-                >
+                <span className="pillar-link">
                   Explore Manufacturing →
-                </a>
+                </span>
               </div>
-            </div>
-            <div
+            </Link>
+            <Link
+              href="/diamonds"
               className="pillar-card"
-              onClick={() => {
-                window.location.href = '/diamonds';
-              }}
             >
               <div
                 className="img-box pillar-img no-shimmer"
@@ -209,22 +199,14 @@ export default function HomePage() {
                   Natural · Salt &amp; Pepper · Lab-Grown · Moissanite · Gemstones
                   · Melee to 15+ carats
                 </p>
-                <a
-                  className="pillar-link"
-                  onClick={e => {
-                    e.preventDefault();
-                    window.location.href = '/diamonds';
-                  }}
-                >
+                <span className="pillar-link">
                   Explore Diamonds →
-                </a>
+                </span>
               </div>
-            </div>
-            <div
+            </Link>
+            <Link
+              href="/retail"
               className="pillar-card"
-              onClick={() => {
-                window.location.href = '/retail';
-              }}
             >
               <div
                 className="img-box pillar-img no-shimmer"
@@ -242,17 +224,11 @@ export default function HomePage() {
                 <p className="pillar-steps">
                   Photography · Social Media · Content · Website Support · Packaging
                 </p>
-                <a
-                  className="pillar-link"
-                  onClick={e => {
-                    e.preventDefault();
-                    window.location.href = '/retail';
-                  }}
-                >
+                <span className="pillar-link">
                   Explore Retail Support →
-                </a>
+                </span>
               </div>
-            </div>
+            </Link>
           </div>
         </div>
       </section>
