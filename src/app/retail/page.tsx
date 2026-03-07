@@ -1,9 +1,43 @@
 'use client';
 
+import { useState, useEffect } from 'react';
+
 const BOOK_CALENDAR_URL =
   'https://calendar.google.com/calendar/appointments/schedules/AcZssZ2Aaafw8kAHZlAUoqXan9cm5O4YgtoOyJyKPN8060M0qrgqc1UDlcKq7OjEV903XRL40p6pp6xe?gv=true';
 
+const SOCIAL_IMAGES = [
+  'https://images.pexels.com/photos/1457801/pexels-photo-1457801.jpeg',
+  'https://images.pexels.com/photos/2735981/pexels-photo-2735981.jpeg',
+  '/images/8P5A5887.JPG',
+  '/images/8P5A8805.jpg',
+  '/images/IMG_7142.jpg',
+  '/images/IMG_9424.jpg',
+];
+
 export default function RetailPage() {
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  useEffect(() => {
+    if (isPaused) return;
+    const interval = setInterval(() => {
+      setActiveSlide((prev) => (prev + 1) % SOCIAL_IMAGES.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [isPaused]);
+
+  const handlePrev = () => {
+    setIsPaused(true);
+    setActiveSlide((prev) => (prev - 1 + SOCIAL_IMAGES.length) % SOCIAL_IMAGES.length);
+    setTimeout(() => setIsPaused(false), 3000);
+  };
+
+  const handleNext = () => {
+    setIsPaused(true);
+    setActiveSlide((prev) => (prev + 1) % SOCIAL_IMAGES.length);
+    setTimeout(() => setIsPaused(false), 3000);
+  };
+
   return (
     <>
       <div className="retail-hero">
@@ -182,46 +216,34 @@ export default function RetailPage() {
               </div>
             </div>
             <div className="fade-in fade-in-delay-2">
-              <div className="social-slider" id="socialSlider">
-                <div className="social-slide active">
-                  <img
-                    src="https://images.pexels.com/photos/1457801/pexels-photo-1457801.jpeg"
-                    alt="Social Post 1"
-                  />
-                </div>
-                <div className="social-slide">
-                  <img
-                    src="https://images.pexels.com/photos/2735981/pexels-photo-2735981.jpeg"
-                    alt="Social Post 2"
-                  />
-                </div>
-                <div className="social-slide">
-                  <img src="/images/8P5A5887.JPG" alt="Social Post 3" />
-                </div>
-                <div className="social-slide">
-                  <img src="/images/8P5A8805.jpg" alt="Social Post 4" />
-                </div>
-                <div className="social-slide">
-                  <img src="/images/IMG_7142.jpg" alt="Social Post 5" />
-                </div>
-                <div className="social-slide">
-                  <img src="/images/IMG_9424.jpg" alt="Social Post 6" />
-                </div>
+              <div 
+                className="social-slider" 
+                onMouseEnter={() => setIsPaused(true)}
+                onMouseLeave={() => setIsPaused(false)}
+              >
+                {SOCIAL_IMAGES.map((img, idx) => (
+                  <div 
+                    key={img} 
+                    className={`social-slide ${idx === activeSlide ? 'active' : ''}`}
+                  >
+                    <img src={img} alt={`Social Post ${idx + 1}`} />
+                  </div>
+                ))}
               </div>
               <div className="social-controls">
                 <button
                   className="social-ctrl"
-                  id="socialPrev"
                   type="button"
                   aria-label="Previous"
+                  onClick={handlePrev}
                 >
                   ‹
                 </button>
                 <button
                   className="social-ctrl"
-                  id="socialNext"
                   type="button"
                   aria-label="Next"
+                  onClick={handleNext}
                 >
                   ›
                 </button>

@@ -1,9 +1,31 @@
 'use client';
 
+import { useRef } from 'react';
+
 const BOOK_CALENDAR_URL =
   'https://calendar.google.com/calendar/appointments/schedules/AcZssZ2Aaafw8kAHZlAUoqXan9cm5O4YgtoOyJyKPN8060M0qrgqc1UDlcKq7OjEV903XRL40p6pp6xe?gv=true';
 
 export default function DiamondsPage() {
+  const shapesTrackRef = useRef<HTMLDivElement>(null);
+  const videosTrackRef = useRef<HTMLDivElement>(null);
+
+  const scrollShapes = (dir: number) => {
+    if (!shapesTrackRef.current) return;
+    shapesTrackRef.current.scrollBy({
+      left: dir * 240,
+      behavior: 'smooth',
+    });
+  };
+
+  const scrollVideos = (dir: number) => {
+    if (!videosTrackRef.current) return;
+    const el = videosTrackRef.current;
+    el.scrollBy({
+      left: dir * Math.max(320, Math.floor(el.clientWidth * 0.8)),
+      behavior: 'smooth',
+    });
+  };
+
   return (
     <>
       <div className="diamonds-hero">
@@ -162,11 +184,11 @@ export default function DiamondsPage() {
             <button
               className="shape-nav left"
               type="button"
-              onClick={() => (window as any).scrollVideos?.(-1)}
+              onClick={() => scrollShapes(-1)}
             >
               ‹
             </button>
-            <div className="shape-track" id="shapesTrack">
+            <div className="shape-track" id="shapesTrack" ref={shapesTrackRef}>
               <div className="shape-card">
                 <img src="/images/diamondshapes/round.png" alt="Round" />
                 <div className="shape-label">Round</div>
@@ -256,7 +278,7 @@ export default function DiamondsPage() {
             <button
               className="shape-nav right"
               type="button"
-              onClick={() => (window as any).scrollVideos?.(1)}
+              onClick={() => scrollShapes(1)}
             >
               ›
             </button>
@@ -285,11 +307,11 @@ export default function DiamondsPage() {
             <button
               className="video-nav left"
               type="button"
-              onClick={() => (window as any).scrollVideos?.(-1)}
+              onClick={() => scrollVideos(-1)}
             >
               ‹
             </button>
-            <div className="video-track" id="videosTrack">
+            <div className="video-track" id="videosTrack" ref={videosTrackRef}>
               <div className="video-item">
                 <video
                   src="/videos/0227.mp4"
@@ -384,7 +406,7 @@ export default function DiamondsPage() {
             <button
               className="video-nav right"
               type="button"
-              onClick={() => (window as any).scrollVideos?.(1)}
+              onClick={() => scrollVideos(1)}
             >
               ›
             </button>

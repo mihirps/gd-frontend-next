@@ -116,109 +116,11 @@ export default function ClientEffects() {
       };
     }
 
-    // Diamond videos scroll helper (buttons can call via window.scrollVideos)
-    (window as any).scrollVideos = (dir: number) => {
-      const el = document.getElementById('videosTrack');
-      if (!el) return;
-      el.scrollBy({
-        left: dir * Math.max(320, Math.floor(el.clientWidth * 0.8)),
-        behavior: 'smooth',
-      });
-    };
-
-    // Social slider (retail page)
-    const slider = document.getElementById('socialSlider');
-    let sliderInterval: number | undefined;
-    if (slider) {
-      const slides = Array.from(
-        slider.querySelectorAll<HTMLElement>('.social-slide'),
-      );
-      let idx = 0;
-      const show = (n: number) => {
-        slides.forEach((s, i) => s.classList.toggle('active', i === n));
-      };
-      show(0);
-      let paused = false; 
-      slider.addEventListener('mouseenter', () => {
-        paused = true;
-      });
-      slider.addEventListener('mouseleave', () => {
-        paused = false;
-      });
-      const prev = document.getElementById('socialPrev');
-      const next = document.getElementById('socialNext');
-      if (prev)
-        prev.addEventListener('click', () => {
-          paused = true;
-          idx = (idx - 1 + slides.length) % slides.length;
-          show(idx);
-          setTimeout(() => {
-            paused = false;
-          }, 3000);
-        });
-      if (next)
-        next.addEventListener('click', () => {
-          paused = true;
-          idx = (idx + 1) % slides.length;
-          show(idx);
-          setTimeout(() => {
-            paused = false;
-          }, 3000);
-        });
-      sliderInterval = window.setInterval(() => {
-        if (paused || slides.length < 2) return;
-        idx = (idx + 1) % slides.length;
-        show(idx);
-      }, 4000);
-    }
-
-    // Request form tabs
-    (window as any).selectReqType = (type: string) => {
-      document
-        .querySelectorAll<HTMLElement>('.request-types .req-type')
-        .forEach(i => i.classList.remove('active'));
-      const active = document.querySelector<HTMLElement>(
-        `.request-types .req-type[data-type="${type}"]`,
-      );
-      if (active) active.classList.add('active');
-      document
-        .querySelectorAll<HTMLElement>('.req-form-panel')
-        .forEach(p => p.classList.remove('active'));
-      const panel = document.getElementById('form-' + type);
-      if (panel) panel.classList.add('active');
-    };
-
-    // Initialize default request tab if present
-    const def = document.querySelector<HTMLElement>(
-      '.request-types .req-type.active',
-    );
-    if (def && def.dataset.type) {
-      (window as any).selectReqType(def.dataset.type);
-    }
-
-    // Manufacturing ring-size visibility
-    const typeEl = document.getElementById(
-      'manufacturingJewelryType',
-    ) as HTMLSelectElement | null;
-    const ringGroup = document.getElementById(
-      'manufacturingRingSizeGroup',
-    ) as HTMLElement | null;
-    if (typeEl && ringGroup) {
-      const sync = () => {
-        const v = (typeEl.value || '').toLowerCase();
-        ringGroup.style.display =
-          v === 'ring' || v === 'bangle' ? '' : 'none';
-      };
-      typeEl.addEventListener('change', sync);
-      sync();
-    }
-
     return () => {
       window.removeEventListener('scroll', onScroll);
       document.removeEventListener('mousemove', onMove);
       observer.disconnect();
       shapesCleanup();
-      if (sliderInterval) window.clearInterval(sliderInterval);
     };
   }, [pathname]);
 

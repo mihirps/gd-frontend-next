@@ -1,5 +1,7 @@
 'use client';
 
+import { useState } from 'react';
+
 const BOOK_CALENDAR_URL =
   'https://calendar.google.com/calendar/appointments/schedules/AcZssZ2Aaafw8kAHZlAUoqXan9cm5O4YgtoOyJyKPN8060M0qrgqc1UDlcKq7OjEV903XRL40p6pp6xe?gv=true';
 
@@ -27,6 +29,11 @@ function handleSubmit(endpoint: string) {
 }
 
 export default function RequestPage() {
+  const [activeTab, setActiveTab] = useState('diamond');
+  const [jewelryType, setJewelryType] = useState('');
+
+  const isRingSizeVisible = jewelryType.toLowerCase() === 'ring' || jewelryType.toLowerCase() === 'bangle';
+
   return (
     <>
       <div className="request-hero">
@@ -45,54 +52,48 @@ export default function RequestPage() {
         <div className="container">
           <div className="request-types fade-in">
             <div
-              className="req-type"
-              data-type="manufacturing"
-              onClick={() => (window as any).selectReqType?.('manufacturing')}
+              className={`req-type ${activeTab === 'manufacturing' ? 'active' : ''}`}
+              onClick={() => setActiveTab('manufacturing')}
             >
               <div className="req-type-icon">⚒</div>
               <h3>Manufacturing Request</h3>
               <p>Custom jewelry, collection production, casting &amp; finishing</p>
             </div>
             <div
-              className="req-type active"
-              data-type="diamond"
-              onClick={() => (window as any).selectReqType?.('diamond')}
+              className={`req-type ${activeTab === 'diamond' ? 'active' : ''}`}
+              onClick={() => setActiveTab('diamond')}
             >
               <div className="req-type-icon">◆</div>
               <h3>Diamond Request</h3>
               <p>Natural, lab-grown, salt &amp; pepper, moissanite</p>
             </div>
             <div
-              className="req-type"
-              data-type="gemstone"
-              onClick={() => (window as any).selectReqType?.('gemstone')}
+              className={`req-type ${activeTab === 'gemstone' ? 'active' : ''}`}
+              onClick={() => setActiveTab('gemstone')}
             >
               <div className="req-type-icon">◈</div>
               <h3>Gemstone Request</h3>
               <p>Sapphire, ruby, emerald, fantasy cuts, and more</p>
             </div>
             <div
-              className="req-type"
-              data-type="cutting"
-              onClick={() => (window as any).selectReqType?.('cutting')}
+              className={`req-type ${activeTab === 'cutting' ? 'active' : ''}`}
+              onClick={() => setActiveTab('cutting')}
             >
               <div className="req-type-icon">✦</div>
               <h3>Custom Cutting</h3>
               <p>Unique shapes, fantasy cuts, specialty cuts</p>
             </div>
             <div
-              className="req-type"
-              data-type="design"
-              onClick={() => (window as any).selectReqType?.('design')}
+              className={`req-type ${activeTab === 'design' ? 'active' : ''}`}
+              onClick={() => setActiveTab('design')}
             >
               <div className="req-type-icon">◉</div>
               <h3>4,000+ Design Access</h3>
               <p>Website-ready photo &amp; video design library</p>
             </div>
             <div
-              className="req-type"
-              data-type="retail"
-              onClick={() => (window as any).selectReqType?.('retail')}
+              className={`req-type ${activeTab === 'retail' ? 'active' : ''}`}
+              onClick={() => setActiveTab('retail')}
             >
               <div className="req-type-icon">◻</div>
               <h3>Retail Support Plan</h3>
@@ -104,8 +105,9 @@ export default function RequestPage() {
             {/* Manufacturing form */}
             <form
               id="form-manufacturing"
-              className="req-form-panel"
+              className={`req-form-panel ${activeTab === 'manufacturing' ? 'active' : ''}`}
               onSubmit={handleSubmit('/api/request/manufacturing')}
+              style={{ display: activeTab === 'manufacturing' ? 'block' : 'none' }}
             >
               <h3
                 style={{
@@ -161,17 +163,17 @@ export default function RequestPage() {
                 <div className="form-group">
                   <label>Jewelry Type</label>
                   <select
-                    id="manufacturingJewelryType"
                     name="jewelryType"
+                    onChange={(e) => setJewelryType(e.target.value)}
                   >
-                    <option>Select Type</option>
-                    <option>Ring</option>
-                    <option>Bracelet</option>
-                    <option>Bangle</option>
-                    <option>Necklace</option>
-                    <option>Pendant</option>
-                    <option>Earrings</option>
-                    <option>Other</option>
+                    <option value="">Select Type</option>
+                    <option value="Ring">Ring</option>
+                    <option value="Bracelet">Bracelet</option>
+                    <option value="Bangle">Bangle</option>
+                    <option value="Necklace">Necklace</option>
+                    <option value="Pendant">Pendant</option>
+                    <option value="Earrings">Earrings</option>
+                    <option value="Other">Other</option>
                   </select>
                 </div>
                 <div className="form-group">
@@ -182,37 +184,35 @@ export default function RequestPage() {
                     <option>Silver</option>
                   </select>
                 </div>
-                <div
-                  className="form-group"
-                  id="manufacturingRingSizeGroup"
-                  style={{ display: 'none' }}
-                >
-                  <label>Ring Size</label>
-                  <select id="manufacturingRingSize" name="ringSize">
-                    <option>Select Size</option>
-                    <option>3</option>
-                    <option>3.5</option>
-                    <option>4</option>
-                    <option>4.5</option>
-                    <option>5</option>
-                    <option>5.5</option>
-                    <option>6</option>
-                    <option>6.5</option>
-                    <option>7</option>
-                    <option>7.5</option>
-                    <option>8</option>
-                    <option>8.5</option>
-                    <option>9</option>
-                    <option>9.5</option>
-                    <option>10</option>
-                    <option>10.5</option>
-                    <option>11</option>
-                    <option>11.5</option>
-                    <option>12</option>
-                    <option>12.5</option>
-                    <option>13</option>
-                  </select>
-                </div>
+                {isRingSizeVisible && (
+                  <div className="form-group">
+                    <label>Ring Size</label>
+                    <select name="ringSize">
+                      <option>Select Size</option>
+                      <option>3</option>
+                      <option>3.5</option>
+                      <option>4</option>
+                      <option>4.5</option>
+                      <option>5</option>
+                      <option>5.5</option>
+                      <option>6</option>
+                      <option>6.5</option>
+                      <option>7</option>
+                      <option>7.5</option>
+                      <option>8</option>
+                      <option>8.5</option>
+                      <option>9</option>
+                      <option>9.5</option>
+                      <option>10</option>
+                      <option>10.5</option>
+                      <option>11</option>
+                      <option>11.5</option>
+                      <option>12</option>
+                      <option>12.5</option>
+                      <option>13</option>
+                    </select>
+                  </div>
+                )}
                 <div className="form-group full">
                   <label>Details</label>
                   <textarea
@@ -248,8 +248,9 @@ export default function RequestPage() {
             {/* Diamond form */}
             <form
               id="form-diamond"
-              className="req-form-panel active"
+              className={`req-form-panel ${activeTab === 'diamond' ? 'active' : ''}`}
               onSubmit={handleSubmit('/api/request/diamond')}
+              style={{ display: activeTab === 'diamond' ? 'block' : 'none' }}
             >
               <h3
                 style={{
@@ -373,8 +374,9 @@ export default function RequestPage() {
             {/* Gemstone form */}
             <form
               id="form-gemstone"
-              className="req-form-panel"
+              className={`req-form-panel ${activeTab === 'gemstone' ? 'active' : ''}`}
               onSubmit={handleSubmit('/api/request/gemstone')}
+              style={{ display: activeTab === 'gemstone' ? 'block' : 'none' }}
             >
               <h3
                 style={{
@@ -478,8 +480,9 @@ export default function RequestPage() {
             {/* Cutting form */}
             <form
               id="form-cutting"
-              className="req-form-panel"
+              className={`req-form-panel ${activeTab === 'cutting' ? 'active' : ''}`}
               onSubmit={handleSubmit('/api/request/cutting')}
+              style={{ display: activeTab === 'cutting' ? 'block' : 'none' }}
             >
               <h3
                 style={{
@@ -583,8 +586,9 @@ export default function RequestPage() {
             {/* Design access form */}
             <form
               id="form-design"
-              className="req-form-panel"
+              className={`req-form-panel ${activeTab === 'design' ? 'active' : ''}`}
               onSubmit={handleSubmit('/api/request/design')}
+              style={{ display: activeTab === 'design' ? 'block' : 'none' }}
             >
               <h3
                 style={{
@@ -689,8 +693,9 @@ export default function RequestPage() {
             {/* Retail support form */}
             <form
               id="form-retail"
-              className="req-form-panel"
+              className={`req-form-panel ${activeTab === 'retail' ? 'active' : ''}`}
               onSubmit={handleSubmit('/api/request/retail')}
+              style={{ display: activeTab === 'retail' ? 'block' : 'none' }}
             >
               <h3
                 style={{
