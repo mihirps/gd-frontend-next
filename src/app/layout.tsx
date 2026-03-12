@@ -113,21 +113,21 @@ export default function RootLayout({
                 <div className="footer-socials">
                   <a
                     className="social-icon"
-                    href="https://www.instagram.com"
+                    href="https://www.instagram.com/gemstone_diamonds"
                     aria-label="Instagram"
                   >
                     <i className="fa-brands fa-instagram" aria-hidden="true" />
                   </a>
                   <a
                     className="social-icon"
-                    href="https://www.facebook.com"
+                    href="https://www.instagram.com/gemstone_diamonds"
                     aria-label="Facebook"
                   >
                     <i className="fa-brands fa-facebook-f" aria-hidden="true" />
                   </a>
-                  <a
+                  <a  
                     className="social-icon"
-                    href="https://www.whatsapp.com"
+                    href="https://wa.me/16263673527"
                     aria-label="WhatsApp"
                   >
                     <i className="fa-brands fa-whatsapp" aria-hidden="true" />
@@ -145,7 +145,7 @@ export default function RootLayout({
                 <h4>Services</h4>
                 <ul className="footer-links">
                   <li>
-                    <Link href="/jewelry">Manufacturing</Link>
+                    <Link href="/jewelry">Jewelry</Link>
                   </li>
                   <li>
                     <Link href="/diamonds">Diamonds</Link>
