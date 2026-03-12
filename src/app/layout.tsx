@@ -115,6 +115,7 @@ export default function RootLayout({
                     className="social-icon"
                     href="https://www.instagram.com/gemstone_diamonds"
                     aria-label="Instagram"
+                    target="_blank"
                   >
                     <i className="fa-brands fa-instagram" aria-hidden="true" />
                   </a>
@@ -122,6 +123,7 @@ export default function RootLayout({
                     className="social-icon"
                     href="https://www.instagram.com/gemstone_diamonds"
                     aria-label="Facebook"
+                    target="_blank"
                   >
                     <i className="fa-brands fa-facebook-f" aria-hidden="true" />
                   </a>
@@ -129,6 +131,7 @@ export default function RootLayout({
                     className="social-icon"
                     href="https://wa.me/16263673527"
                     aria-label="WhatsApp"
+                    target="_blank"
                   >
                     <i className="fa-brands fa-whatsapp" aria-hidden="true" />
                   </a>
@@ -136,6 +139,7 @@ export default function RootLayout({
                     className="social-icon"
                     href="https://in.pinterest.com/gemstonediamonds/"
                     aria-label="Pinterest"
+                    target="_blank"
                   >
                     <i className="fa-brands fa-pinterest-p" aria-hidden="true" />
                   </a>
